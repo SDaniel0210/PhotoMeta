@@ -8,7 +8,7 @@ Az alkalmazás célja, hogy a felhasználók könnyen áttekintsék a fotóikhoz
 
 ---
 
-# 🎯 Az alkalmazás célja
+# Az alkalmazás célja
 
 A modern digitális fényképek jelentős mennyiségű metaadatot tartalmaznak (EXIF), például:
 
@@ -25,9 +25,9 @@ A **PhotoMeta** alkalmazás célja, hogy ezeket az információkat:
 
 ---
 
-# 📱 Fő funkciók
+#  Fő funkciók
 
-## 1️⃣ Kép importálás
+##  Kép importálás
 
 A felhasználó képeket tölthet be a készülék tárhelyéről.
 
@@ -47,7 +47,7 @@ Kiolvasott adatok például:
 
 ---
 
-## 2️⃣ Lista nézet
+##  Lista nézet
 
 A betöltött képek egy listában jelennek meg.
 
@@ -60,14 +60,14 @@ A listában minden elem tartalmazza:
 
 A lista **RecyclerView segítségével** valósul meg.
 
-### 🔎 Keresés
+### Keresés
 
 A felhasználó kereshet:
 
 - cím alapján  
 - kamera modell alapján  
 
-### ↕ Rendezés
+### Rendezés
 
 A lista rendezhető:
 
@@ -76,7 +76,7 @@ A lista rendezhető:
 
 ---
 
-## 3️⃣ CRUD műveletek
+## CRUD műveletek
 
 Az alkalmazás teljes adatbázis-kezelést biztosít.
 
@@ -89,7 +89,7 @@ Lehetséges műveletek:
 
 ---
 
-# 🗺 Opcionális funkció
+#  Opcionális funkció
 
 ## Térképes megjelenítés
 
@@ -100,17 +100,17 @@ Ha a kép tartalmaz GPS koordinátákat, az alkalmazás képes:
 
 ---
 
-# 🧭 Navigáció
+#  Navigáció
 
 Az alkalmazás három fő nézetet tartalmaz:
 
-### 📂 See Pictures
+###  See Pictures
 A mentett képek listája.
 
-### 📸 Take Pictures
+###  Take Pictures
 Új kép készítése vagy kép importálása.
 
-### 📊 Stats
+###  Stats
 Statisztikai nézet, például:
 
 - kamera modellek eloszlása  
@@ -119,7 +119,7 @@ Statisztikai nézet, például:
 
 ---
 
-# 🏗 Technológiák
+# Technológiák
 
 Az alkalmazás a következő technológiákat használja:
 
@@ -150,4 +150,3 @@ Az alkalmazás a következő technológiákat használja:
 
 ---
 
-# 🗃 Alkalmazás architektúra
