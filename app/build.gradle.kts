@@ -42,6 +42,9 @@ dependencies {
     implementation(libs.constraintlayout)
 
     implementation("androidx.room:room-runtime:2.8.4")
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.recyclerview)
     annotationProcessor("androidx.room:room-compiler:2.8.4")
 
     testImplementation(libs.junit)

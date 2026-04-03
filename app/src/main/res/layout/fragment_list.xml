@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListFragment" >
+    tools:context=".ListFragment">
 
     <ImageView
         android:id="@+id/bgImage"
@@ -15,10 +16,98 @@
         android:src="@drawable/placeholderbg3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:flow_verticalAlign="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bgImage">
+
+        <TextView
+            android:id="@+id/search_lb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Search By:"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@+id/search_spn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/search_spn"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/button_secondary_selector"
+            android:backgroundTint="#AEFFFFFF"
+            android:popupBackground="@android:drawable/btn_dropdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/search_lb"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/order_lb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Order By:"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@+id/order_spn"
+            app:layout_constraintEnd_toStartOf="@+id/order_spn" />
+
+        <Spinner
+            android:id="@+id/order_spn"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/button_secondary_selector"
+            android:backgroundTint="#AEFFFFFF"
+            android:popupBackground="@android:drawable/btn_dropdown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/search_txt"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:backgroundTint="#AEFFFFFF"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topPanel" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/button_secondary_selector"
+        android:backgroundTint="#8BFFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_txt" />
 
     <LinearLayout
         android:id="@+id/bottomPanel"
@@ -35,6 +124,18 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            android:id="@+id/import_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_primary_selector"
+            android:text="Import"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="@null" />
+
+        <Button
             android:id="@+id/back_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,181 +148,17 @@
             app:backgroundTint="@null" />
 
         <Button
-            android:id="@+id/delete_btn"
+            android:id="@+id/stats_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:background="@drawable/button_secondary_selector"
-            android:text="Delete"
+            android:text="Stats"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            app:backgroundTint="#830D0D" />
+            app:backgroundTint="@null" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bgImage"
-        tools:src="@tools:sample/avatars" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/button_secondary_selector"
-        android:backgroundTint="#83979191"
-        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0">
-
-        <EditText
-            android:id="@+id/name_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/description_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/description_txt"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/name_lb"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/name_txt"
-            app:layout_constraintEnd_toEndOf="@+id/description_lb"
-            app:layout_constraintStart_toStartOf="@+id/description_lb" />
-
-        <EditText
-            android:id="@+id/description_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/date_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/date_txt"
-            app:layout_constraintTop_toBottomOf="@+id/name_txt" />
-
-        <TextView
-            android:id="@+id/description_lb"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/description_txt"
-            app:layout_constraintEnd_toEndOf="@+id/date_lb"
-            app:layout_constraintStart_toStartOf="@+id/date_lb" />
-
-        <EditText
-            android:id="@+id/date_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/camera_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/camera_txt"
-            app:layout_constraintTop_toBottomOf="@+id/description_txt" />
-
-        <TextView
-            android:id="@+id/date_lb"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Date Taken"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date_txt"
-            app:layout_constraintEnd_toEndOf="@+id/camera_lb"
-            app:layout_constraintStart_toStartOf="@+id/camera_lb" />
-
-        <EditText
-            android:id="@+id/camera_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/coordinates_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/camera_lb"
-            app:layout_constraintTop_toBottomOf="@+id/date_txt" />
-
-        <TextView
-            android:id="@+id/camera_lb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Camera Model"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/camera_txt"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/coordinates_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/ai_txt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/camera_txt"
-            app:layout_constraintTop_toBottomOf="@+id/camera_txt" />
-
-        <TextView
-            android:id="@+id/coordinates_lb"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:text="Coordinates"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/coordinates_txt"
-            app:layout_constraintEnd_toEndOf="@+id/camera_lb"
-            app:layout_constraintEnd_toStartOf="@+id/coordinates_txt"
-            app:layout_constraintStart_toStartOf="@+id/camera_lb" />
-
-        <EditText
-            android:id="@+id/ai_txt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/coordinates_txt"
-            app:layout_constraintTop_toBottomOf="@+id/coordinates_txt" />
-
-        <TextView
-            android:id="@+id/ai_lb"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="AI Status"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/ai_txt"
-            app:layout_constraintEnd_toEndOf="@+id/coordinates_lb"
-            app:layout_constraintStart_toStartOf="@+id/coordinates_lb" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
