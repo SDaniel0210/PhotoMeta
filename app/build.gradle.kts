@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.recyclerview)
+    implementation(libs.cardview)
     annotationProcessor("androidx.room:room-compiler:2.8.4")
 
     testImplementation(libs.junit)
