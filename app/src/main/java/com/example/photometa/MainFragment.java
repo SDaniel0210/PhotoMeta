@@ -42,7 +42,9 @@ import com.example.photometa.data.local.AppDatabase;
 import com.example.photometa.data.local.entity.Photo;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,6 +90,8 @@ public class MainFragment extends Fragment {
                             photo.setTitle(uri.substring(uri.lastIndexOf(File.separator)+1));
                             photo.setAiStatus("UNKNOWN");
 
+                            extractExif(cameraImageUri, photo);
+
                             db.photoDao().insert(photo);
 
                             int count = db.photoDao().getAll().size();
@@ -117,6 +121,8 @@ public class MainFragment extends Fragment {
                                 //This is hardcoded until the image naming is fixed
                                 photo.setTitle(uriString.substring(uriString.lastIndexOf("%2F")+3));
                                 photo.setAiStatus("UNKNOWN");
+
+                                extractExif(uri, photo);
 
                                 db.photoDao().insert(photo);
                             }
@@ -214,6 +220,30 @@ public class MainFragment extends Fragment {
             } else {
                 Toast.makeText(context, "Camera permission denied", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    //Extracts values from picture's exif. If the tag doesn't exist, value is null or 0
+    public void extractExif(Uri uri, Photo photo){
+        try {
+            InputStream inputStream= getContext().getContentResolver().openInputStream(uri);
+            exifInterface=new ExifInterface(inputStream);
+            photo.setDateTaken(exifInterface.getAttribute(ExifInterface.TAG_DATETIME));
+            photo.setCameraModel(exifInterface.getAttribute(ExifInterface.TAG_MODEL));
+            photo.setDescription(exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION));
+            Double lat=0.0;
+            if(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE)!= null){
+                lat=Double.parseDouble(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
+            }
+            Double lon=0.0;
+            if(exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)!= null){
+                lat=Double.parseDouble(exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE));
+            }
+            photo.setLatitude(lat);
+            photo.setLongitude(lon);
+            Log.d("RV_BIND", "Binding: " + photo.getDateTaken());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
