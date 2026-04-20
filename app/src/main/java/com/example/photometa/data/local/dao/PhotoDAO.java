@@ -21,6 +21,18 @@ public interface PhotoDAO {
     @Query("SELECT title FROM photos where id=0")
     String getFirstTitle();
 
+    @Query("SELECT COUNT(*) FROM photos")
+    int getTotalCount();
+
+    @Query("SELECT COUNT(*) FROM photos WHERE latitude IS NOT NULL AND longitude IS NOT NULL")
+    int getGpsCount();
+
+    @Query("SELECT COUNT(*) FROM photos WHERE aiStatus = 'Verified'")
+    int getAiVerifiedCount();
+
+    @Query("SELECT cameraModel FROM photos")
+    List<String> getTopCameras();
+
     @Delete
     void delete(Photo photo);
 
