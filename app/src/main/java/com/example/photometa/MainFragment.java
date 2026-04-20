@@ -231,16 +231,14 @@ public class MainFragment extends Fragment {
             photo.setDateTaken(exifInterface.getAttribute(ExifInterface.TAG_DATETIME));
             photo.setCameraModel(exifInterface.getAttribute(ExifInterface.TAG_MODEL));
             photo.setDescription(exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION));
-            Double lat=0.0;
-            if(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE)!= null){
-                lat=Double.parseDouble(exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
+            float[] latLong = new float[2];
+            if (exifInterface.getLatLong(latLong)) {
+                photo.setLatitude((double) latLong[0]);
+                photo.setLongitude((double) latLong[1]);
+            } else {
+                photo.setLatitude(null);
+                photo.setLongitude(null);
             }
-            Double lon=0.0;
-            if(exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)!= null){
-                lat=Double.parseDouble(exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE));
-            }
-            photo.setLatitude(lat);
-            photo.setLongitude(lon);
             Log.d("RV_BIND", "Binding: " + photo.getDateTaken());
         } catch (IOException e) {
             throw new RuntimeException(e);
