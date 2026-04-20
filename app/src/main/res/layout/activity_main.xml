@@ -8,80 +8,15 @@
     android:background="#000000"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/bgImage"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/placeholderbg3"
-        android:alpha="0.9"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageButton
-        android:id="@+id/takepic_btn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_menu_camera"
-        android:scaleType="fitCenter"
-        android:padding="20dp"
-        android:contentDescription="Take picture"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <LinearLayout
-        android:id="@+id/bottomPanel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bottom_panel_overlay"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="18dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/import_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_primary_selector"
-            android:text="Import"
-            android:textColor="#FFFFFF"
-            android:textAllCaps="false"
-            app:backgroundTint="@null" />
-
-        <Button
-            android:id="@+id/list_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_secondary_selector"
-            android:text="List"
-            android:textColor="#FFFFFF"
-            android:textAllCaps="false"
-            app:backgroundTint="@null" />
-
-        <Button
-            android:id="@+id/stats_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_secondary_selector"
-            android:text="Stats"
-            android:textColor="#FFFFFF"
-            android:textAllCaps="false"
-            app:backgroundTint="@null" />
-    </LinearLayout>
+        app:navGraph="@navigation/app_navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>
