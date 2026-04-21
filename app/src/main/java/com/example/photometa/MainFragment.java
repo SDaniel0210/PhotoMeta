@@ -183,6 +183,15 @@ public class MainFragment extends Fragment {
             }
         });
 
+        Button stats_btn = view.findViewById(R.id.stats_btn);
+        stats_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_mainFragment_to_statsFragment);
+            }
+        });
+
+
         int randomIndex = (int) (Math.random() * images.length);
         bg.setImageResource(images[randomIndex]);
 

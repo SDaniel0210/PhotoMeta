@@ -79,6 +79,14 @@ public class ListFragment extends Fragment {
             }
         });
 
+        Button stats_btn = view.findViewById(R.id.stats_btn);
+        stats_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_listFragment_to_statsFragment);
+            }
+        });
+
         return view;
     }
 }
