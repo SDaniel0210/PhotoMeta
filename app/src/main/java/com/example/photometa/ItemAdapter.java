@@ -36,6 +36,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         Photo photo=photos.get(position);
         Log.d("RV_BIND", "Binding: " + photo.getTitle());
         holder.photonameLb.setText(photo.getTitle());
+
+        if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
+            holder.photoImg.setImageURI(Uri.parse(photo.getImageUri()));
+        } else {
+            holder.photoImg.setImageResource(R.drawable.placeholderbg3); // optional fallback
+        }
+
         holder.itemView.setOnClickListener(v->{
             if(listener!=null){
                 listener.OnItemClick(position);

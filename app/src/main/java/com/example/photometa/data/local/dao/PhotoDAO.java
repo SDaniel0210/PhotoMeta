@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.DeleteTable;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.photometa.data.local.entity.Photo;
 
@@ -14,6 +15,9 @@ import java.util.List;
 public interface PhotoDAO {
     @Insert
     void insert(Photo photo);
+
+    @Query("SELECT * FROM photos where id=:id")
+    Photo getPhoto(int id);
 
     @Query("SELECT * FROM photos")
     List<Photo> getAll();
@@ -32,6 +36,9 @@ public interface PhotoDAO {
 
     @Query("SELECT cameraModel FROM photos")
     List<String> getTopCameras();
+
+    @Update
+    void update(Photo photo);
 
     @Delete
     void delete(Photo photo);

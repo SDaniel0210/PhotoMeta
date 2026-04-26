@@ -67,8 +67,9 @@ public class ListFragment extends Fragment {
         });
 
         adapter.setOnClickItemListener(((position) -> {
-            //todo: Give position to ItemViewFragment and fill from that
-            navController.navigate(R.id.action_listFragment_to_singleitemFragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", position+1);
+            navController.navigate(R.id.action_listFragment_to_singleitemFragment, bundle);
         }));
 
         backButton=view.findViewById(R.id.back_btn);

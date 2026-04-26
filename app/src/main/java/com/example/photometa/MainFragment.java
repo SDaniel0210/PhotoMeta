@@ -248,7 +248,6 @@ public class MainFragment extends Fragment {
                 photo.setLatitude(null);
                 photo.setLongitude(null);
             }
-            Log.d("RV_BIND", "Binding: " + photo.getDateTaken());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
