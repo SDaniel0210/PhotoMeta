@@ -36,6 +36,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         Photo photo=photos.get(position);
         Log.d("RV_BIND", "Binding: " + photo.getTitle());
         holder.photonameLb.setText(photo.getTitle());
+        if (photo.getDescription()!=null){
+            holder.descOrPathLb.setText(photo.getDescription());
+        }else holder.descOrPathLb.setText(photo.getImageUri());
 
         if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
             holder.photoImg.setImageURI(Uri.parse(photo.getImageUri()));

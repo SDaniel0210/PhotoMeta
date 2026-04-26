@@ -29,4 +29,16 @@
         app:layout_constraintStart_toEndOf="@+id/photo_img"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/descOrPath_lb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/photo_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
