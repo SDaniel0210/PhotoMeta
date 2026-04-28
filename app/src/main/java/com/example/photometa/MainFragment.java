@@ -67,9 +67,9 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_main,container,false);
-        context=getContext();
-        navController= NavHostFragment.findNavController(this);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        context = getContext();
+        navController = NavHostFragment.findNavController(this);
 
         db = Room.databaseBuilder(
                 getActivity().getApplicationContext(),
@@ -84,10 +84,10 @@ public class MainFragment extends Fragment {
                         new Thread(() -> {
                             Photo photo = new Photo();
                             //moved cameraImageUri to a variable for multiple calls
-                            String uri=cameraImageUri.toString();
+                            String uri = cameraImageUri.toString();
                             photo.setImageUri(uri);
 
-                            photo.setTitle(uri.substring(uri.lastIndexOf(File.separator)+1));
+                            photo.setTitle(uri.substring(uri.lastIndexOf(File.separator) + 1));
                             photo.setAiStatus("UNKNOWN");
 
                             extractExif(cameraImageUri, photo);
@@ -116,10 +116,10 @@ public class MainFragment extends Fragment {
                             for (Uri uri : uris) {
                                 Photo photo = new Photo();
                                 //moved uri to a variable for multiple calls
-                                String uriString=uri.toString();
+                                String uriString = uri.toString();
                                 photo.setImageUri(uriString);
                                 //This is hardcoded until the image naming is fixed
-                                photo.setTitle(uriString.substring(uriString.lastIndexOf("%2F")+3));
+                                photo.setTitle(uriString.substring(uriString.lastIndexOf("%2F") + 3));
                                 photo.setAiStatus("UNKNOWN");
 
                                 extractExif(uri, photo);
@@ -175,7 +175,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        Button list_btn=view.findViewById(R.id.list_btn);
+        Button list_btn = view.findViewById(R.id.list_btn);
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,6 +219,7 @@ public class MainFragment extends Fragment {
             Toast.makeText(context, "Could not create image location", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) { //permission window!!!
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -233,13 +234,14 @@ public class MainFragment extends Fragment {
     }
 
     //Extracts values from picture's exif. If the tag doesn't exist, value is null or 0
-    public void extractExif(Uri uri, Photo photo){
+    public void extractExif(Uri uri, Photo photo) {
         try {
-            InputStream inputStream= getContext().getContentResolver().openInputStream(uri);
-            exifInterface=new ExifInterface(inputStream);
+            InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
+            exifInterface = new ExifInterface(inputStream);
             photo.setDateTaken(exifInterface.getAttribute(ExifInterface.TAG_DATETIME));
             photo.setCameraModel(exifInterface.getAttribute(ExifInterface.TAG_MODEL));
             photo.setDescription(exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION));
+            photo.setAiStatus(detectAiStatus(exifInterface));
             float[] latLong = new float[2];
             if (exifInterface.getLatLong(latLong)) {
                 photo.setLatitude((double) latLong[0]);
@@ -252,5 +254,66 @@ public class MainFragment extends Fragment {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String detectAiStatus(ExifInterface exifInterface) {
+        StringBuilder metadata = new StringBuilder();
+
+        String[] tags = {
+                ExifInterface.TAG_MAKE,
+                ExifInterface.TAG_MODEL,
+                ExifInterface.TAG_SOFTWARE,
+                ExifInterface.TAG_IMAGE_DESCRIPTION,
+                ExifInterface.TAG_USER_COMMENT,
+                ExifInterface.TAG_ARTIST,
+                ExifInterface.TAG_COPYRIGHT
+        };
+
+        for (String tag : tags) {
+            String value = exifInterface.getAttribute(tag);
+            if (value != null) {
+                metadata.append(value.toLowerCase()).append(" ");
+            }
+        }
+
+        String data = metadata.toString();
+
+        String[] aiKeywords = { //tags from AI generated images
+                "stable diffusion",
+                "midjourney",
+                "dall",
+                "openai",
+                "chatgpt",
+                "comfyui",
+                "automatic1111",
+                "novelai",
+                "leonardo",
+                "firefly",
+                "prompt",
+                "negative prompt",
+                "sampler",
+                "seed",
+                "cfg",
+                "steps",
+                "ai generated",
+                "generated by ai"
+        };
+
+        for (String keyword : aiKeywords) {
+            if (data.contains(keyword)) {
+                return "AI";
+            }
+        }
+
+        // Checking real datas from exif
+        String cameraModel = exifInterface.getAttribute(ExifInterface.TAG_MODEL);
+        String make = exifInterface.getAttribute(ExifInterface.TAG_MAKE);
+        String date = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
+
+        if (cameraModel != null && make != null && date != null) {
+            return "REAL";
+        }
+
+        return "UNKNOWN";
     }
 }

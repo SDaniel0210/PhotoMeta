@@ -27,7 +27,7 @@ public interface PhotoDAO {
     @Query("SELECT COUNT(*) FROM photos WHERE latitude IS NOT NULL AND longitude IS NOT NULL")
     int getGpsCount();
 
-    @Query("SELECT COUNT(*) FROM photos WHERE aiStatus = 'Verified'")
+    @Query("SELECT COUNT(*) FROM photos WHERE aiStatus = 'AI'")
     int getAiVerifiedCount();
 
     @Query("SELECT cameraModel FROM photos")
