@@ -3,6 +3,7 @@ package com.example.photometa;
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.ExifInterface;
 import android.media.Image;
@@ -114,6 +115,14 @@ public class MainFragment extends Fragment {
 
                         new Thread(() -> {
                             for (Uri uri : uris) {
+                                try {
+                                    requireContext().getContentResolver().takePersistableUriPermission(
+                                            uri,
+                                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                    );
+                                } catch (SecurityException e) {
+                                    e.printStackTrace();
+                                }
                                 Photo photo = new Photo();
                                 //moved uri to a variable for multiple calls
                                 String uriString=uri.toString();

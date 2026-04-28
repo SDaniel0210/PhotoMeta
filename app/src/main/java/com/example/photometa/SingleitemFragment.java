@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.example.photometa.utils.ImageLoader;
+
 public class SingleitemFragment extends Fragment {
 
     Photo photo;
@@ -69,7 +71,7 @@ public class SingleitemFragment extends Fragment {
                 aiTxt.setText(photo.getAiStatus());
 
                 if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()){
-                    imageView.setImageURI(Uri.parse(photo.getImageUri()));
+                    ImageLoader.loadScaledImage(imageView, Uri.parse(photo.getImageUri()), 1200, 1200);
                 } else {
                     imageView.setImageResource(R.drawable.placeholderbg3);
                 }

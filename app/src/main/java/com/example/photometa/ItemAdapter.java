@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photometa.data.local.entity.Photo;
 
-import java.io.File;
+import com.example.photometa.utils.ImageLoader;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
@@ -41,7 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
         }else holder.descOrPathLb.setText(photo.getImageUri());
 
         if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
-            holder.photoImg.setImageURI(Uri.parse(photo.getImageUri()));
+            ImageLoader.loadScaledImage(holder.photoImg, Uri.parse(photo.getImageUri()), 400, 400);
         } else {
             holder.photoImg.setImageResource(R.drawable.placeholderbg3); // optional fallback
         }
@@ -51,6 +51,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                 listener.OnItemClick(position);
             }
         });
+
     }
 
     @Override
