@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemViewHolder extends RecyclerView.ViewHolder {
 
     ImageView photoImg;
-    TextView photonameLb;
+    TextView photonameLb, descOrPathLb;
     public ItemViewHolder(@NonNull View itemView) {
         super(itemView);
         photoImg=itemView.findViewById(R.id.photo_img);
         photonameLb=itemView.findViewById(R.id.photoname_lb);
+        descOrPathLb=itemView.findViewById(R.id.descOrPath_lb);
     }
 }

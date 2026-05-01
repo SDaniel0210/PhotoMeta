@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photometa.data.local.entity.Photo;
 
-import java.io.File;
+import com.example.photometa.utils.ImageLoader;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
@@ -34,13 +34,23 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Photo photo=photos.get(position);
-        Log.d("RV_BIND", "Binding: " + photo.getTitle());
         holder.photonameLb.setText(photo.getTitle());
+        if (photo.getDescription()!=null){
+            holder.descOrPathLb.setText(photo.getDescription());
+        }else holder.descOrPathLb.setText(photo.getImageUri());
+
+        if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
+            ImageLoader.loadScaledImage(holder.photoImg, Uri.parse(photo.getImageUri()), 400, 400);
+        } else {
+            holder.photoImg.setImageResource(R.drawable.placeholderbg3); // optional fallback
+        }
+
         holder.itemView.setOnClickListener(v->{
             if(listener!=null){
-                listener.OnItemClick(position);
+                listener.OnItemClick(photo.getId());
             }
         });
+
     }
 
     @Override
@@ -49,7 +59,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     }
 
     public interface OnItemClickListener{
-        void OnItemClick(int position);
+        void OnItemClick(int photoId);
 
     }
 
