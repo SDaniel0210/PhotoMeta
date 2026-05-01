@@ -2,6 +2,7 @@ package com.example.photometa;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,17 @@ public class SingleitemFragment extends Fragment {
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            id=getArguments().getInt("position");
+            id=getArguments().getInt("photoId");
             photo=db.photoDao().getPhoto(id);
+
+
+            if (photo == null) {
+                for (Photo i : db.photoDao().getAll()){
+                    Log.d("RV_BIND", "ID: " + i.getId());
+                }
+                descTxt.setText(Integer.toString(id));
+                return;
+            }
 
             requireActivity().runOnUiThread(() -> {
                 nameTxt.setText(photo.getTitle());

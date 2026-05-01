@@ -34,7 +34,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Photo photo=photos.get(position);
-        Log.d("RV_BIND", "Binding: " + photo.getTitle());
         holder.photonameLb.setText(photo.getTitle());
         if (photo.getDescription()!=null){
             holder.descOrPathLb.setText(photo.getDescription());
@@ -48,7 +47,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         holder.itemView.setOnClickListener(v->{
             if(listener!=null){
-                listener.OnItemClick(position);
+                listener.OnItemClick(photo.getId());
             }
         });
 
@@ -60,7 +59,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     }
 
     public interface OnItemClickListener{
-        void OnItemClick(int position);
+        void OnItemClick(int photoId);
 
     }
 
