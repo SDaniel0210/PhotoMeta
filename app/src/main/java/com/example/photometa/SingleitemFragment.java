@@ -102,7 +102,9 @@ public class SingleitemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 photo.setTitle(nameTxt.getText().toString());
-                photo.setDescription(descTxt.getText().toString());
+                if(descTxt.getText().length()>=1){
+                    photo.setDescription(descTxt.getText().toString());
+                }
                 photo.setDateTaken(dateTxt.getText().toString());
                 photo.setCameraModel(cameraTxt.getText().toString());
                 String s =coordsTxt.getText().toString();

@@ -65,7 +65,7 @@ public class ListFragment extends Fragment {
         spinners.add("Camera Model");
         spinners.add("Coordinates");
         spinners.add("AI Status");
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinners);
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(getContext(), R.layout.visible_spinner, spinners);
         arrayAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         search_spn.setAdapter(arrayAdapter);
 

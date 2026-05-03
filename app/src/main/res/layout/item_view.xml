@@ -22,12 +22,17 @@
     <TextView
         android:id="@+id/photoname_lb"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
+        android:maxLines="1"
+        android:nestedScrollingEnabled="false"
         android:text="Photo Name"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/descOrPath_lb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/photo_img"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,16 +40,17 @@
     <TextView
         android:id="@+id/descOrPath_lb"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:maxLines="1"
         android:text="TextView"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/photo_img"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/photoname_lb" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
