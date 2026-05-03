@@ -50,11 +50,7 @@ public class SingleitemFragment extends Fragment {
         aiTxt=view.findViewById(R.id.ai_txt);
         imageView=view.findViewById(R.id.imageView);
 
-        db = Room.databaseBuilder(
-                getActivity().getApplicationContext(),
-                AppDatabase.class,
-                "photo_db"
-        ).build();
+        db = AppDatabase.getInstance(getContext());
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {

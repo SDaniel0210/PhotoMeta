@@ -113,6 +113,7 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/description_txt"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.833"
             app:layout_constraintStart_toStartOf="@+id/description_txt"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -170,7 +171,7 @@
             android:padding="5dp"
             android:text="Date Taken"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/camera_txt"
+            app:layout_constraintBottom_toTopOf="@+id/make_txt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/camera_txt"
             app:layout_constraintTop_toBottomOf="@+id/description_txt" />
@@ -189,6 +190,36 @@
             app:layout_constraintStart_toStartOf="@+id/camera_lb" />
 
         <EditText
+            android:id="@+id/make_txt"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/button_secondary_selector"
+            android:backgroundTint="#C7FFFFFF"
+            android:ems="10"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:padding="5dp"
+            android:text="Make"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/camera_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/camera_txt"
+            app:layout_constraintTop_toBottomOf="@+id/date_txt" />
+
+        <TextView
+            android:id="@+id/make_lb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Date Taken"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/make_txt"
+            app:layout_constraintEnd_toEndOf="@+id/camera_lb"
+            app:layout_constraintStart_toStartOf="@+id/camera_lb" />
+
+        <EditText
             android:id="@+id/camera_txt"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -203,7 +234,7 @@
             app:layout_constraintBottom_toTopOf="@+id/coordinates_txt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/camera_lb"
-            app:layout_constraintTop_toBottomOf="@+id/date_txt" />
+            app:layout_constraintTop_toBottomOf="@+id/make_txt" />
 
         <TextView
             android:id="@+id/camera_lb"

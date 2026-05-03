@@ -69,11 +69,7 @@ public class ListFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         search_spn.setAdapter(arrayAdapter);
 
-        db = Room.databaseBuilder(
-                getActivity().getApplicationContext(),
-                AppDatabase.class,
-                "photo_db"
-        ).build();
+        db = AppDatabase.getInstance(getContext());
 
         loadList();
 
