@@ -84,7 +84,7 @@ public class MainFragment extends Fragment {
                             photo.setAiStatus("UNKNOWN");
 
                             extractExif(cameraImageUri, photo);
-
+                            photo.setMake(exifInterface.getAttribute(ExifInterface.TAG_MAKE));
                             db.photoDao().insert(photo);
 
                             int count = db.photoDao().getAll().size();

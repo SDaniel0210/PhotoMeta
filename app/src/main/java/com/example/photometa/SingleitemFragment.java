@@ -34,7 +34,7 @@ public class SingleitemFragment extends Fragment {
     private AppDatabase db;
     private Button back_btn, delete_btn, save_btn;
     private NavController navController;
-    private TextView nameTxt, descTxt, dateTxt, cameraTxt, coordsTxt, aiTxt;
+    private TextView nameTxt, descTxt, dateTxt, cameraTxt, makeTxt, coordsTxt, aiTxt;
     private ImageView imageView;
     @Nullable
     @Override
@@ -46,6 +46,7 @@ public class SingleitemFragment extends Fragment {
         descTxt=view.findViewById(R.id.description_txt);
         dateTxt=view.findViewById(R.id.date_txt);
         cameraTxt=view.findViewById(R.id.camera_txt);
+        makeTxt = view.findViewById(R.id.make_txt);
         coordsTxt=view.findViewById(R.id.coordinates_txt);
         aiTxt=view.findViewById(R.id.ai_txt);
         imageView=view.findViewById(R.id.imageView);
@@ -70,6 +71,11 @@ public class SingleitemFragment extends Fragment {
                 nameTxt.setText(photo.getTitle());
                 descTxt.setText(photo.getDescription());
                 dateTxt.setText(photo.getDateTaken());
+                if ("REAL".equals(photo.getAiStatus()) && photo.getMake() != null && !photo.getMake().trim().isEmpty()) {
+                    makeTxt.setText(photo.getMake());
+                } else {
+                    makeTxt.setText("");
+                }
                 cameraTxt.setText(photo.getCameraModel());
                 if(photo.getLatitude()!=null && photo.getLongitude()!=null){
                     coordsTxt.setText(photo.getLatitude().toString()+"-"+photo.getLongitude().toString());
