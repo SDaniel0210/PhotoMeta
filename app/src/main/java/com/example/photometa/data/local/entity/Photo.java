@@ -1,8 +1,11 @@
 package com.example.photometa.data.local.entity;
 import android.media.Image;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Entity(tableName = "photos")
 
@@ -17,7 +20,7 @@ public class Photo {
     private Double latitude; //GPS
     private Double longitude; //GPS
     private String aiStatus; //AI realornot
-
+    private String make; //EXIF
 
     public int getId() {
         return id;
@@ -91,5 +94,12 @@ public class Photo {
         this.aiStatus = aiStatus;
     }
 
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
 
 }

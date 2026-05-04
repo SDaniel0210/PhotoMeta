@@ -68,7 +68,7 @@ public class MainFragment extends Fragment {
                 getActivity().getApplicationContext(),
                 AppDatabase.class,
                 "photo_db"
-        ).build();
+        ).addMigrations(AppDatabase.MIGRATION_1_2).build();
 
         takePictureLauncher = registerForActivityResult( //takepic button behav
                 new ActivityResultContracts.TakePicture(),
@@ -247,6 +247,7 @@ public class MainFragment extends Fragment {
             photo.setDateTaken(exifInterface.getAttribute(ExifInterface.TAG_DATETIME));
             photo.setCameraModel(exifInterface.getAttribute(ExifInterface.TAG_MODEL));
             photo.setDescription(exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION));
+            photo.setMake(exifInterface.getAttribute(ExifInterface.TAG_MAKE));
             photo.setAiStatus(detectAiStatus(uri, exifInterface));
 
             float[] latLong = new float[2];
