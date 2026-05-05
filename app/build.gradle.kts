@@ -40,7 +40,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-
+    implementation("com.github.bumptech.glide:glide:5.0.5")
     implementation("androidx.room:room-runtime:2.8.4")
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)

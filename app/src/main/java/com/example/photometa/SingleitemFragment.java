@@ -16,16 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.Room;
 
 import com.example.photometa.data.local.AppDatabase;
 import com.example.photometa.data.local.entity.Photo;
 
-import java.util.List;
+import com.bumptech.glide.Glide;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import com.example.photometa.utils.ImageLoader;
 
 public class SingleitemFragment extends Fragment {
 
@@ -82,10 +79,14 @@ public class SingleitemFragment extends Fragment {
                 }else coordsTxt.setText("0-0");
                 aiTxt.setText(photo.getAiStatus());
 
-                if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()){
-                    ImageLoader.loadScaledImage(imageView, Uri.parse(photo.getImageUri()), 1200, 1200);
+                if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
+                    Glide.with(this)
+                            .load(Uri.parse(photo.getImageUri()))
+                            .override(1200, 1200)
+                            .fitCenter()
+                            .into(imageView);
                 } else {
-                    imageView.setImageResource(R.drawable.placeholderbg3);
+                    imageView.setImageDrawable(null);
                 }
 
             });
