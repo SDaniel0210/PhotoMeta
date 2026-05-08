@@ -1,6 +1,7 @@
 package com.example.photometa;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class SingleitemFragment extends Fragment {
     private NavController navController;
     private TextView nameTxt, descTxt, dateTxt, cameraTxt, makeTxt, coordsTxt, aiTxt;
     private ImageView imageView;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,7 +52,6 @@ public class SingleitemFragment extends Fragment {
 
         db = AppDatabase.getInstance(getContext());
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             id=getArguments().getInt("photoId");
             photo=db.photoDao().getPhoto(id);
@@ -122,7 +123,6 @@ public class SingleitemFragment extends Fragment {
                 } else Toast.makeText(getContext(), "Coordinates must be in format: lat-lon", Toast.LENGTH_SHORT).show();
                 photo.setAiStatus(aiTxt.getText().toString());
 
-                ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.execute(() -> {
                     db.photoDao().update(photo);
                     requireActivity().runOnUiThread(() -> {
@@ -136,9 +136,9 @@ public class SingleitemFragment extends Fragment {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.execute(() -> {
                     db.photoDao().delete(photo);
+
                     requireActivity().runOnUiThread(() -> {
                         Toast.makeText(getContext(), "Photo deleted ("+photo.getTitle()+")", Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.action_singleitemFragment_to_listFragment);

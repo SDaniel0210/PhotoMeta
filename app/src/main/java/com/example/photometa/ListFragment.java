@@ -42,7 +42,8 @@ public class ListFragment extends Fragment {
 
     private Button backButton;
     private NavController navController;
-    ArrayList<String> spinners=new ArrayList<>();
+    private ArrayList<String> spinners=new ArrayList<>();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Nullable
     @Override
@@ -128,7 +129,6 @@ public class ListFragment extends Fragment {
     }
 
     public void loadList(){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             String search="%"+search_txt.getText()+"%";
             List<Photo> photos = null;
@@ -159,7 +159,6 @@ public class ListFragment extends Fragment {
                     photos = db.photoDao().getAllByAI(search);
                     break;
             }
-            //This is to make the lambda accept the non-final list
             List<Photo> finalPhotos= photos;
             requireActivity().runOnUiThread(() -> {
                 adapter.photos=finalPhotos;
