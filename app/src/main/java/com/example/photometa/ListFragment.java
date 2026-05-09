@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -129,22 +130,21 @@ public class ListFragment extends Fragment {
     }
 
     public void loadList(){
-        executor.execute(() -> {
             String search="%"+search_txt.getText()+"%";
-            List<Photo> photos = null;
+            LiveData<List<Photo>> liveData = null;
 
             switch (search_spn.getSelectedItem().toString()){
                 case "Title":
-                    photos = db.photoDao().getAllByTitle(search);
+                    liveData = db.photoDao().getAllByTitle(search);
                     break;
                 case "Description":
-                    photos = db.photoDao().getAllByDescription(search);
+                    liveData = db.photoDao().getAllByDescription(search);
                     break;
                 case "Date Taken":
-                    photos = db.photoDao().getAllByDate(search);
+                    liveData = db.photoDao().getAllByDate(search);
                     break;
                 case "Camera Model":
-                    photos = db.photoDao().getAllByCamera(search);
+                    liveData = db.photoDao().getAllByCamera(search);
                     break;
                 case "Coordinates":
                     String[] coords= search_txt.getText().toString().split("-");
@@ -153,17 +153,17 @@ public class ListFragment extends Fragment {
                     if(coords.length<2){
                         lon="0.0";
                     }else lon=coords[1];
-                    photos=db.photoDao().getAllByCoords(lat,lon);
+                    liveData=db.photoDao().getAllByCoords(lat,lon);
                     break;
                 case "AI Status":
-                    photos = db.photoDao().getAllByAI(search);
+                    liveData = db.photoDao().getAllByAI(search);
                     break;
             }
-            List<Photo> finalPhotos= photos;
-            requireActivity().runOnUiThread(() -> {
-                adapter.photos=finalPhotos;
-                adapter.notifyDataSetChanged();
-            });
+
+        liveData.observe(getViewLifecycleOwner(), photos -> {
+            if (photos != null) {
+                adapter.setPhotos(photos);
+            }
         });
     }
 }

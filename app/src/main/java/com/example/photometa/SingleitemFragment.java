@@ -52,45 +52,38 @@ public class SingleitemFragment extends Fragment {
 
         db = AppDatabase.getInstance(getContext());
 
-        executor.execute(() -> {
-            id=getArguments().getInt("photoId");
-            photo=db.photoDao().getPhoto(id);
+        id=getArguments().getInt("photoId");
 
+        db.photoDao().getPhoto(id).observe(getViewLifecycleOwner(), updatedPhoto -> {
+            if (updatedPhoto == null) return;
 
-            if (photo == null) {
-                for (Photo i : db.photoDao().getAll()){
-                    Log.d("RV_BIND", "ID: " + i.getId());
-                }
-                descTxt.setText(Integer.toString(id));
-                return;
+            photo = updatedPhoto;
+
+            nameTxt.setText(photo.getTitle());
+            descTxt.setText(photo.getDescription());
+            dateTxt.setText(photo.getDateTaken());
+            cameraTxt.setText(photo.getCameraModel());
+            aiTxt.setText(photo.getAiStatus());
+
+            if ("REAL".equals(photo.getAiStatus()) && photo.getMake() != null && !photo.getMake().trim().isEmpty()) {
+                makeTxt.setText(photo.getMake());
+            } else {
+                makeTxt.setText("");
             }
 
-            requireActivity().runOnUiThread(() -> {
-                nameTxt.setText(photo.getTitle());
-                descTxt.setText(photo.getDescription());
-                dateTxt.setText(photo.getDateTaken());
-                if ("REAL".equals(photo.getAiStatus()) && photo.getMake() != null && !photo.getMake().trim().isEmpty()) {
-                    makeTxt.setText(photo.getMake());
-                } else {
-                    makeTxt.setText("");
-                }
-                cameraTxt.setText(photo.getCameraModel());
-                if(photo.getLatitude()!=null && photo.getLongitude()!=null){
-                    coordsTxt.setText(photo.getLatitude().toString()+"-"+photo.getLongitude().toString());
-                }else coordsTxt.setText("0-0");
-                aiTxt.setText(photo.getAiStatus());
+            if(photo.getLatitude()!=null && photo.getLongitude()!=null){
+                coordsTxt.setText(photo.getLatitude().toString()+"-"+photo.getLongitude().toString());
+            }else coordsTxt.setText("0-0");
 
-                if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
-                    Glide.with(this)
-                            .load(Uri.parse(photo.getImageUri()))
-                            .override(1200, 1200)
-                            .fitCenter()
-                            .into(imageView);
-                } else {
-                    imageView.setImageDrawable(null);
-                }
-
-            });
+            if (photo.getImageUri() != null && !photo.getImageUri().isEmpty()) {
+                Glide.with(this)
+                        .load(Uri.parse(photo.getImageUri()))
+                        .override(1200, 1200)
+                        .fitCenter()
+                        .into(imageView);
+            } else {
+                imageView.setImageDrawable(null);
+            }
         });
 
         back_btn=view.findViewById(R.id.back_btn);
