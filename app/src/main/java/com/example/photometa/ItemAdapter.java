@@ -1,5 +1,6 @@
 package com.example.photometa;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.photometa.data.local.entity.Photo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-    List<Photo> photos;
+    List<Photo> photos = new ArrayList<>();
 
     private OnItemClickListener listener;
 
@@ -70,5 +72,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     public void setOnClickItemListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setPhotos(List<Photo> newPhotos) {
+        this.photos = newPhotos;
+        notifyDataSetChanged();
     }
 }

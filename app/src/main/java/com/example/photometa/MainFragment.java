@@ -30,6 +30,8 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -39,7 +41,8 @@ import com.example.photometa.data.local.entity.Photo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainFragment extends Fragment {
@@ -65,6 +68,17 @@ public class MainFragment extends Fragment {
 
         db = AppDatabase.getInstance(requireContext());
 
+        ItemAdapter adapter = new ItemAdapter(new ArrayList<>());
+
+
+        AppDatabase.getInstance(getContext()).photoDao().getAll().observe(
+                getViewLifecycleOwner(), photos -> {
+                    if (photos != null) {
+                        adapter.setPhotos(photos);
+                    }
+                }
+        );
+
         takePictureLauncher = registerForActivityResult( //takepic button behav
                 new ActivityResultContracts.TakePicture(),
                 success -> {
@@ -82,7 +96,7 @@ public class MainFragment extends Fragment {
                             photo.setMake(exifInterface.getAttribute(ExifInterface.TAG_MAKE));
                             db.photoDao().insert(photo);
 
-                            int count = db.photoDao().getAll().size();
+                            int count = db.photoDao().getTotalCount();
 
                             getActivity().runOnUiThread(() ->
                                     Toast.makeText(getContext(), "Camera image saved. DB count: " + count, Toast.LENGTH_LONG).show()
@@ -123,7 +137,7 @@ public class MainFragment extends Fragment {
                                 db.photoDao().insert(photo);
                             }
 
-                            int count = db.photoDao().getAll().size();
+                            int count = db.photoDao().getTotalCount();
 
                             getActivity().runOnUiThread(() ->
                                     Toast.makeText(getContext(), "DB count: " + count, Toast.LENGTH_LONG).show()

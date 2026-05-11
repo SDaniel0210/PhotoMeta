@@ -61,22 +61,6 @@ public class StatsFragment extends Fragment {
             int totalCount = photoDao.getTotalCount();
             int gpsCount = photoDao.getGpsCount();
             int aiVerifiedCount = photoDao.getAiVerifiedCount();
-            List<String> topCameras = photoDao.getTopCameras();
-
-            Map<String, Integer> counts = new HashMap<>();
-            for (String name : topCameras) {
-                if (name == null) name = "UNKNOWN";
-                counts.put(name, counts.getOrDefault(name, 0) + 1);
-            }
-
-            float[] values = new float[counts.size()];
-            String[] labels = new String[counts.size()];
-            int i = 0;
-            for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-                labels[i] = entry.getKey();
-                values[i] = entry.getValue();
-                i++;
-            }
 
             if (getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
@@ -94,15 +78,35 @@ public class StatsFragment extends Fragment {
                                 new float[]{aiVerifiedCount, totalCount - aiVerifiedCount},
                                 new String[]{"AI", "Not AI"},
                                 new int[]{Color.rgb(33, 150, 243), Color.rgb(189, 189, 189)});
-
-                        updateBarChart(topCameraChart,
-                                values,
-                                labels,
-                                new int[]{Color.rgb(255, 152, 0)});
                     }
                 });
             }
         }).start();
+
+        photoDao.getTopCameras().observe(getViewLifecycleOwner(), cameras -> {
+            if (cameras != null && !cameras.isEmpty()) {
+
+                Map<String, Integer> counts = new HashMap<>();
+                for (String name : cameras) {
+                    if (name == null) name = "UNKNOWN";
+                    counts.put(name, counts.getOrDefault(name, 0) + 1);
+                }
+
+                float[] values = new float[counts.size()];
+                String[] labels = new String[counts.size()];
+                int i = 0;
+                for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+                    labels[i] = entry.getKey();
+                    values[i] = entry.getValue();
+                    i++;
+                }
+
+                updateBarChart(topCameraChart, values, labels, new int[]{Color.rgb(255, 152, 0)});
+            }
+        });
+
+
+
     }
 
     private void updateBarChart(BarChart chart, float[] values, String[] labels, int[] colors) {
