@@ -32,7 +32,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.Room;
 
 import com.example.photometa.data.local.AppDatabase;
 import com.example.photometa.data.local.entity.Photo;
@@ -64,11 +63,7 @@ public class MainFragment extends Fragment {
         context = getContext();
         navController = NavHostFragment.findNavController(this);
 
-        db = Room.databaseBuilder(
-                getActivity().getApplicationContext(),
-                AppDatabase.class,
-                "photo_db"
-        ).addMigrations(AppDatabase.MIGRATION_1_2).build();
+        db = AppDatabase.getInstance(requireContext());
 
         takePictureLauncher = registerForActivityResult( //takepic button behav
                 new ActivityResultContracts.TakePicture(),
@@ -346,7 +341,7 @@ public class MainFragment extends Fragment {
             }
         }
 
-        return matches >= 4;
+        return matches >= 4; //Flagging threshold
     }
     private boolean containsStrongAiKeyword(String data) {
         if (data == null || data.isEmpty()) {
